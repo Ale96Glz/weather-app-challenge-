@@ -1,120 +1,175 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
 import './App.css'
+import logo from './assets/images/logo.svg'
+import iconSunny from './assets/images/icon-sunny.webp'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
+     <div className="min-h-screen">
+     <header>
+        <img src={logo} alt="Weather App" />
+
         <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
+          <button
+            type="button"
+            id="units-button"
+            aria-expanded="false"
+            aria-controls="units-panel"
+            aria-haspopup="true"
+          >
+            Units
+          </button>
+
+          <div id="units-panel" hidden>
+            <button type="button">Switch to Imperial</button>
+
+            <fieldset>
+              <legend>Temperature</legend>
+              <label>
+                <input type="radio" name="temperature" value="celsius" defaultChecked />
+                Celsius (°C)
+              </label>
+              <label>
+                <input type="radio" name="temperature" value="fahrenheit" />
+                Fahrenheit (°F)
+              </label>
+            </fieldset>
+
+            <fieldset>
+              <legend>Wind Speed</legend>
+              <label>
+                <input type="radio" name="wind" value="kmh" defaultChecked />
+                km/h
+              </label>
+              <label>
+                <input type="radio" name="wind" value="mph" />
+                mph
+              </label>
+            </fieldset>
+
+            <fieldset>
+              <legend>Precipitation</legend>
+              <label>
+                <input type="radio" name="precipitation" value="mm" defaultChecked />
+                Millimeters (mm)
+              </label>
+              <label>
+                <input type="radio" name="precipitation" value="in" />
+                Inches (in)
+              </label>
+            </fieldset>
+          </div>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+      </header>
 
-      <div className="ticks"></div>
+      <main>
+        <section aria-labelledby="search-heading">
+          <h1 id="search-heading">How's the sky looking today?</h1>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
+          <form role="search">
+            <label htmlFor="city">Search for a city</label>
+            <input
+              id="city"
+              type="search"
+              name="city"
+              placeholder="Search for a city, e.g., New York"
+              autoComplete="off"
+            />
+            <button type="submit">Search</button>
+          </form>
+        </section>
+
+        <section aria-labelledby="current-heading">
+          <article>
+            <h2 id="current-heading">Berlin, Germany</h2>
+            <p>
+              <time dateTime="2026-08-05">Tuesday, Aug 5, 2026</time>
+            </p>
+            <img src={iconSunny} alt="Sunny" />
+            <p>20°C</p>
+          </article>
+
+          <dl>
+            <div>
+              <dt>Feels like</dt>
+              <dd>20°C</dd>
+            </div>
+            <div>
+              <dt>Humidity</dt>
+              <dd>40%</dd>
+            </div>
+            <div>
+              <dt>Wind</dt>
+              <dd>10 km/h</dd>
+            </div>
+            <div>
+              <dt>Precipitation</dt>
+              <dd>0 mm</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section aria-labelledby="daily-heading">
+          <h2 id="daily-heading">Daily forecast</h2>
           <ul>
             <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
+              <p>Tuesday</p>
+              <img src={iconSunny} alt="" />
+              <p>20°C</p>
             </li>
             <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
+              <p>Wednesday</p>
+              <img src={iconSunny} alt="" />
+              <p>20°C</p>
+            </li>
+            <li>
+              <p>Thursday</p>
+              <img src={iconSunny} alt="" />
+              <p>20°C</p>
+            </li>
+            <li>
+              <p>Friday</p>
+              <img src={iconSunny} alt="" />
+              <p>20°C</p>
+            </li>
+            <li>
+              <p>Saturday</p>
+              <img src={iconSunny} alt="" />
+              <p>20°C</p>
+            </li>
+            <li>
+              <p>Sunday</p>
+              <img src={iconSunny} alt="" />
+              <p>20°C</p>
+            </li>
+            <li>
+              <p>Monday</p>
+              <img src={iconSunny} alt="" />
+              <p>20°C</p>
             </li>
           </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
+        </section>
+
+        <section aria-labelledby="hourly-heading">
+          <h2 id="hourly-heading">Hourly forecast</h2>
           <ul>
             <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
+              <p>
+                <time dateTime="12:00">12:00</time>
+              </p>
+              <img src={iconSunny} alt="" />
+              <p>20°C</p>
             </li>
           </ul>
-        </div>
-      </section>
+        </section>
+      </main>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+      <footer className="attribution">
+        Challenge by{' '}
+        <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.
+        Coded by <a href="#">Your Name Here</a>.
+      </footer>
+     </div>
     </>
   )
 }
