@@ -4,11 +4,11 @@ import logo from './assets/images/logo.svg'
 import iconSearch from './assets/images/icon-search.svg'
 import iconUnits from './assets/images/icon-units.svg'
 import iconDropdown from './assets/images/icon-dropdown.svg'
-import iconLoading from './assets/images/icon-loading.svg'
 import { WeatherStat } from './components/WeatherStat'
 import { DailyForecastItem } from './components/DailyForecastItem'
 import { HourlyForecastItem } from './components/HourlyForecastItem'
 import { Error404 } from './components/Error404'
+import { WeatherSkeleton } from './components/WeatherSkeleton'
 import { useWeather } from './hooks/useWeather'
 import { getWeatherIcon, getWeatherLabel } from './utils/getWeatherIcon'
 import {
@@ -307,12 +307,7 @@ function App() {
                 )}
               </section>
 
-              {isLoading && (
-                <div className="flex flex-col items-center gap-3 py-16 text-neutral-200">
-                  <img src={iconLoading} alt="" className="h-8 w-8 animate-spin" />
-                  <p>Loading weather...</p>
-                </div>
-              )}
+              {isLoading && <WeatherSkeleton />}
 
               {!isLoading && forecast && location && (
                 <div className="md:grid md:grid-cols-2 md:gap-6 md:items-stretch md:grid-rows-1">
