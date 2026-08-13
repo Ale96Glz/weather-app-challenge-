@@ -7,7 +7,6 @@ import iconRain from '../assets/images/icon-rain.webp'
 import iconSnow from '../assets/images/icon-snow.webp'
 import iconStorm from '../assets/images/icon-storm.webp'
 
-/** Maps Open-Meteo WMO weather_code to local icon assets. */
 export function getWeatherIcon(weatherCode: number): string {
   if (weatherCode === 0) return iconSunny
   if (weatherCode === 1 || weatherCode === 2) return iconPartlyCloudy
