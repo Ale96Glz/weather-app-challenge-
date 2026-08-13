@@ -221,7 +221,7 @@ function App() {
                   <div className="flex flex-col gap-1 text-center md:text-left md:gap-2 min-w-0">
                     <h2
                       id="current-heading"
-                      className="text-[1.75rem] leading-tight font-sans font-bold md:text-xl desktop:text-2xl break-words"
+                      className="text-[1.75rem] leading-tight font-sans font-bold md:text-xl desktop:text-2xl  wrap-break-word"
                     >
                       Berlin, Germany
                     </h2>
