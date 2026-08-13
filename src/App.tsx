@@ -5,10 +5,41 @@ import iconSearch from './assets/images/icon-search.svg'
 import iconSunny from './assets/images/icon-sunny.webp'
 import iconUnits from './assets/images/icon-units.svg'
 import iconDropdown from './assets/images/icon-dropdown.svg'
+import { WeatherStat } from './components/WeatherStat'
+import { DailyForecastItem } from './components/DailyForecastItem'
+import { HourlyForecastItem } from './components/HourlyForecastItem'
 
 type TemperatureUnit = 'celsius' | 'fahrenheit'
 type WindUnit = 'kmh' | 'mph'
 type PrecipitationUnit = 'mm' | 'in'
+
+const weatherStats = [
+  { label: 'Feels like', value: '20°C' },
+  { label: 'Humidity', value: '40%' },
+  { label: 'Wind', value: '10 km/h' },
+  { label: 'Precipitation', value: '0 mm' },
+]
+
+const dailyForecast = [
+  { day: 'Tue', high: '20°C', low: '14°C' },
+  { day: 'Wed', high: '20°C', low: '14°C' },
+  { day: 'Thu', high: '20°C', low: '14°C' },
+  { day: 'Fri', high: '20°C', low: '14°C' },
+  { day: 'Sat', high: '20°C', low: '14°C' },
+  { day: 'Sun', high: '20°C', low: '14°C' },
+  { day: 'Mon', high: '20°C', low: '14°C' },
+]
+
+const hourlyForecast = [
+  { time: '3 PM', temperature: '20°C' },
+  { time: '4 PM', temperature: '20°C' },
+  { time: '5 PM', temperature: '20°C' },
+  { time: '6 PM', temperature: '20°C' },
+  { time: '7 PM', temperature: '20°C' },
+  { time: '8 PM', temperature: '20°C' },
+  { time: '9 PM', temperature: '20°C' },
+  { time: '10 PM', temperature: '20°C' },
+]
 
 function App() {
   const [unitsOpen, setUnitsOpen] = useState(false)
@@ -198,170 +229,63 @@ function App() {
             </article>
 
             <dl className="grid grid-cols-2 gap-4 mt-8">
-              <div className="bg-neutral-800 rounded-xl p-6 flex flex-col gap-5 shadow-md border border-neutral-600">
-                <dt className="text-sm font-sans text-neutral-200">Feels like</dt>
-                <dd className="text-xl font-sans font-bold text-neutral-0">20°C</dd>
-              </div>
-              <div className="bg-neutral-800 rounded-xl p-6 flex flex-col gap-5 shadow-md border border-neutral-600">
-                <dt className="text-sm text-neutral-200">Humidity</dt>
-                <dd className="text-xl font-sans font-bold text-neutral-0">40%</dd>
-              </div>
-              <div className="bg-neutral-800 rounded-xl p-6 flex flex-col gap-5 shadow-md border border-neutral-600">
-                <dt className="text-sm text-neutral-200">Wind</dt>
-                <dd className="text-xl font-sans font-bold text-neutral-0">10 km/h</dd>
-              </div>
-              <div className="bg-neutral-800 rounded-xl p-6 flex flex-col gap-5 shadow-md border border-neutral-600">
-                <dt className="text-sm text-neutral-200">Precipitation</dt>
-                <dd className="text-xl font-sans font-bold text-neutral-0">0 mm</dd>
-              </div>
+              {weatherStats.map((stat) => (
+                <WeatherStat key={stat.label} label={stat.label} value={stat.value} />
+              ))}
             </dl>
           </section>
 
           <section aria-labelledby="daily-heading">
             <h2 id="daily-heading">Daily forecast</h2>
             <ul className="grid grid-cols-3 gap-4 mt-8">
-              <li className="bg-neutral-800 rounded-xl p-4 shadow-md border border-neutral-600">
-                <div className="flex flex-col items-center gap-2">
-                  <p>Tue</p>
-                  <img src={iconSunny} alt="" className="w-20 h-20" />
-                </div>
-                <div className="flex justify-between gap-2">
-                  <p>20°C</p>
-                  <p>14°C</p>
-                </div>
-              </li>
-              <li className="bg-neutral-800 rounded-xl p-4 shadow-md border border-neutral-600">
-                <div className="flex flex-col items-center gap-2">
-                  <p>Wed</p>
-                  <img src={iconSunny} alt="" className="w-20 h-20" />
-                </div>
-                <div className="flex justify-between gap-2">
-                  <p>20°C</p>
-                  <p>14°C</p>
-                </div>
-              </li>
-              <li className="bg-neutral-800 rounded-xl p-4 shadow-md border border-neutral-600">
-                <div className="flex flex-col items-center gap-2">
-                  <p>Thu</p>
-                  <img src={iconSunny} alt="" className="w-20 h-20" />
-                </div>
-                <div className="flex justify-between gap-2">
-                  <p>20°C</p>
-                  <p>14°C</p>
-                </div>
-              </li>
-              <li className="bg-neutral-800 rounded-xl p-4 shadow-md border border-neutral-600">
-                <div className="flex flex-col items-center gap-2">
-                  <p>Fri</p>
-                  <img src={iconSunny} alt="" className="w-20 h-20" />
-                </div>
-                <div className="flex justify-between gap-2">
-                  <p>20°C</p>
-                  <p>14°C</p>
-                </div>
-              </li>
-              <li className="bg-neutral-800 rounded-xl p-4 shadow-md border border-neutral-600">
-                <div className="flex flex-col items-center gap-2">
-                  <p>Sat</p>
-                  <img src={iconSunny} alt="" className="w-20 h-20" />
-                </div>
-                <div className="flex justify-between gap-2">
-                  <p>20°C</p>
-                  <p>14°C</p>
-                </div>
-              </li>
-              <li className="bg-neutral-800 rounded-xl p-4 shadow-md border border-neutral-600">
-                <div className="flex flex-col items-center gap-2">
-                  <p>Sun</p>
-                  <img src={iconSunny} alt="" className="w-20 h-20" />
-                </div>
-                <div className="flex justify-between gap-2">
-                  <p>20°C</p>
-                  <p>14°C</p>
-                </div>
-              </li>
-              <li className="bg-neutral-800 rounded-xl p-4 shadow-md border border-neutral-600">
-                <div className="flex flex-col items-center gap-2">
-                  <p>Mon</p>
-                  <img src={iconSunny} alt="" className="w-20 h-20" />
-                </div>
-                <div className="flex justify-between gap-2">
-                  <p>20°C</p>
-                  <p>14°C</p>
-                </div>
-              </li>
+              {dailyForecast.map((day) => (
+                <DailyForecastItem
+                  key={day.day}
+                  day={day.day}
+                  icon={iconSunny}
+                  high={day.high}
+                  low={day.low}
+                />
+              ))}
             </ul>
           </section>
 
-          <section aria-labelledby="hourly-heading" className="mt-4 bg-neutral-800 rounded-xl p-4 shadow-md border border-neutral-600">
+          <section
+            aria-labelledby="hourly-heading"
+            className="mt-4 bg-neutral-800 rounded-xl p-4 shadow-md border border-neutral-600"
+          >
             <div className="flex justify-between items-center">
-            <h2 id="hourly-heading">Hourly forecast</h2>
-            <select name="day" id="day">
-              <option value="tuesday">Tuesday</option>
-              <option value="wednesday">Wednesday</option>
-              <option value="thursday">Thursday</option>
-              <option value="friday">Friday</option>
-              <option value="saturday">Saturday</option>
-              <option value="sunday">Sunday</option>
-            </select>
+              <h2 id="hourly-heading">Hourly forecast</h2>
+              <div className="relative">
+                <select
+                  name="day"
+                  id="day"
+                  className="appearance-none rounded-lg bg-neutral-600 border border-neutral-600 px-3 py-2 pr-9 text-sm font-sans text-neutral-0 outline-none cursor-pointer hover:bg-neutral-700 focus:border-neutral-300"
+                >
+                  <option value="tuesday">Tuesday</option>
+                  <option value="wednesday">Wednesday</option>
+                  <option value="thursday">Thursday</option>
+                  <option value="friday">Friday</option>
+                  <option value="saturday">Saturday</option>
+                  <option value="sunday">Sunday</option>
+                </select>
+                <img
+                  src={iconDropdown}
+                  alt=""
+                  aria-hidden="true"
+                  className="pointer-events-none absolute right-3 top-1/2 h-3 w-3 -translate-y-1/2"
+                />
+              </div>
             </div>
             <ul className="mt-4 grid gap-3">
-              <li className="flex justify-between items-center bg-neutral-600 rounded-xl px-3 py-1 shadow-md border border-neutral-600">
-                <div className="flex items-center gap-2">
-                  <img src={iconSunny} alt="" className="w-8 h-8" />
-                  <p className="text-sm font-sans text-neutral-0">3 PM</p>
-                </div>
-                <p className="text-sm font-sans text-neutral-0">20°C</p>
-              </li>
-              <li className="flex justify-between items-center bg-neutral-600 rounded-xl px-3 py-1 shadow-md border border-neutral-600">
-                <div className="flex items-center gap-2">
-                  <img src={iconSunny} alt="" className="w-8 h-8" />
-                  <p className="text-sm font-sans text-neutral-0">4 PM</p>
-                </div>
-                <p className="text-sm font-sans text-neutral-0">20°C</p>
-              </li>
-              <li className="flex justify-between items-center bg-neutral-600 rounded-xl px-3 py-1 shadow-md border border-neutral-600">
-                <div className="flex items-center gap-2">
-                  <img src={iconSunny} alt="" className="w-8 h-8" />
-                  <p className="text-sm font-sans text-neutral-0">5 PM</p>
-                </div>
-                <p className="text-sm font-sans text-neutral-0">20°C</p>
-              </li>
-              <li className="flex justify-between items-center bg-neutral-600 rounded-xl px-3 py-1 shadow-md border border-neutral-600">
-                <div className="flex items-center gap-2">
-                  <img src={iconSunny} alt="" className="w-8 h-8" />
-                  <p className="text-sm font-sans text-neutral-0">6 PM</p>
-                </div>
-                <p className="text-sm font-sans text-neutral-0">20°C</p>
-              </li>
-              <li className="flex justify-between items-center bg-neutral-600 rounded-xl px-3 py-1 shadow-md border border-neutral-600">
-                <div className="flex items-center gap-2">
-                  <img src={iconSunny} alt="" className="w-8 h-8" />
-                  <p className="text-sm font-sans text-neutral-0">7 PM</p>
-                </div>
-                <p className="text-sm font-sans text-neutral-0">20°C</p>
-              </li>
-              <li className="flex justify-between items-center bg-neutral-600 rounded-xl px-3 py-1 shadow-md border border-neutral-600">
-                <div className="flex items-center gap-2">
-                  <img src={iconSunny} alt="" className="w-8 h-8" />
-                  <p className="text-sm font-sans text-neutral-0">8 PM</p>
-                </div>
-                <p className="text-sm font-sans text-neutral-0">20°C</p>
-              </li>
-              <li className="flex justify-between items-center bg-neutral-600 rounded-xl px-3 py-1 shadow-md border border-neutral-600">
-                <div className="flex items-center gap-2">
-                  <img src={iconSunny} alt="" className="w-8 h-8" />
-                  <p className="text-sm font-sans text-neutral-0">9 PM</p>
-                </div>
-                <p className="text-sm font-sans text-neutral-0">20°C</p>
-              </li>
-              <li className="flex justify-between items-center bg-neutral-600 rounded-xl px-3 py-1 shadow-md border border-neutral-600">
-                <div className="flex items-center gap-2">
-                  <img src={iconSunny} alt="" className="w-8 h-8" />
-                  <p className="text-sm font-sans text-neutral-0">10 PM</p>
-                </div>
-                <p className="text-sm font-sans text-neutral-0">20°C</p>
-              </li>
+              {hourlyForecast.map((hour) => (
+                <HourlyForecastItem
+                  key={hour.time}
+                  time={hour.time}
+                  icon={iconSunny}
+                  temperature={hour.temperature}
+                />
+              ))}
             </ul>
           </section>
         </main>
