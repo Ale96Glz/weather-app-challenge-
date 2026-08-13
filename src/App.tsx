@@ -422,7 +422,7 @@ function App() {
           )}
         </main>
 
-        <footer className="mt-auto border-t border-neutral-600 pt-6 pb-2 text-center text-sm text-neutral-300">
+        <footer className="mt-10 shrink-0 border-t border-neutral-600 pt-6 pb-2 text-center text-sm text-neutral-300">
           <p>
             Challenge by{' '}
             <a
