@@ -4,6 +4,8 @@
 @theme {
   /* Breakpoints — design widths from style-guide */
   --breakpoint-mobile: 23.4375rem; /* 375px */
+  --breakpoint-tablet: 48rem; /* 768px */
+  --breakpoint-laptop: 64rem; /* 1024px */
   --breakpoint-desktop: 90rem; /* 1440px */
 
   /* Neutral */
@@ -32,8 +34,13 @@
 @layer base {
   html {
     font-family: var(--font-sans);
-    font-size: var(--text-body);
+    font-size: 16px;
     color: var(--color-neutral-0);
     background-color: var(--color-neutral-900);
+  }
+
+  body {
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
   }
 }

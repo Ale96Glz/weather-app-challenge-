@@ -3,6 +3,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  min-height: 286px;
 }
 
 @media (min-width: 90rem) {

@@ -5,9 +5,13 @@ type WeatherStatProps = {
 
 export function WeatherStat({ label, value }: WeatherStatProps) {
   return (
-    <div className="bg-neutral-800 rounded-xl p-6 flex flex-col gap-5 shadow-md border border-neutral-600">
-      <dt className="text-sm font-sans text-neutral-200">{label}</dt>
-      <dd className="text-xl font-sans font-bold text-neutral-0">{value}</dd>
+    <div className="min-w-0 overflow-hidden bg-neutral-800 rounded-xl p-4 flex flex-col gap-4 shadow-md border border-neutral-600 md:p-3 md:gap-3">
+      <dt className="text-sm font-sans text-neutral-200 break-words md:text-xs desktop:text-sm">
+        {label}
+      </dt>
+      <dd className="text-xl font-sans font-bold text-neutral-0 break-words md:text-lg desktop:text-xl">
+        {value}
+      </dd>
     </div>
   )
 }
