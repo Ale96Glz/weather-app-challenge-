@@ -1,65 +1,152 @@
+import { useState } from 'react'
 import './App.css'
 import logo from './assets/images/logo.svg'
 import iconSearch from './assets/images/icon-search.svg'
 import iconSunny from './assets/images/icon-sunny.webp'
+import iconUnits from './assets/images/icon-units.svg'
+import iconDropdown from './assets/images/icon-dropdown.svg'
+
+type TemperatureUnit = 'celsius' | 'fahrenheit'
+type WindUnit = 'kmh' | 'mph'
+type PrecipitationUnit = 'mm' | 'in'
 
 function App() {
+  const [unitsOpen, setUnitsOpen] = useState(false)
+  const [temperature, setTemperature] = useState<TemperatureUnit>('celsius')
+  const [wind, setWind] = useState<WindUnit>('kmh')
+  const [precipitation, setPrecipitation] = useState<PrecipitationUnit>('mm')
+
+  const isMetric =
+    temperature === 'celsius' && wind === 'kmh' && precipitation === 'mm'
+
+  function toggleUnitsPanel() {
+    setUnitsOpen((open) => !open)
+  }
+
+  function switchUnitSystem() {
+    if (isMetric) {
+      setTemperature('fahrenheit')
+      setWind('mph')
+      setPrecipitation('in')
+    } else {
+      setTemperature('celsius')
+      setWind('kmh')
+      setPrecipitation('mm')
+    }
+  }
+
   return (
     <>
       <div className="min-h-screen p-4">
         <header className="flex justify-between items-center">
           <img src={logo} alt="Weather App" />
 
-          <div>
+          <div className="relative">
             <button
               type="button"
               id="units-button"
-              aria-expanded="false"
+              aria-expanded={unitsOpen}
               aria-controls="units-panel"
               aria-haspopup="true"
+              onClick={toggleUnitsPanel}
+              className="flex items-center gap-2 rounded-lg bg-neutral-800 px-3 py-2 text-sm text-neutral-0"
             >
+              <img src={iconUnits} alt="" aria-hidden="true" className="h-4 w-4" />
               Units
+              <img
+                src={iconDropdown}
+                alt=""
+                aria-hidden="true"
+                className={`h-3 w-3 transition-transform ${unitsOpen ? 'rotate-180' : ''}`}
+              />
             </button>
 
-            <div id="units-panel" hidden>
-              <button type="button">Switch to Imperial</button>
+            {unitsOpen && (
+              <div
+                id="units-panel"
+                className="absolute right-0 z-10 mt-2 w-56 rounded-xl bg-neutral-800 p-2 shadow-lg border border-neutral-600"
+              >
+                <button
+                  type="button"
+                  onClick={switchUnitSystem}
+                  className="mb-2 w-full rounded-lg px-3 py-2 text-left text-sm text-neutral-0 hover:bg-neutral-700"
+                >
+                  {isMetric ? 'Switch to Imperial' : 'Switch to Metric'}
+                </button>
 
-              <fieldset>
-                <legend>Temperature</legend>
-                <label>
-                  <input type="radio" name="temperature" value="celsius" defaultChecked />
-                  Celsius (°C)
-                </label>
-                <label>
-                  <input type="radio" name="temperature" value="fahrenheit" />
-                  Fahrenheit (°F)
-                </label>
-              </fieldset>
+                <fieldset className="mb-2">
+                  <legend className="px-3 py-1 text-xs text-neutral-300">Temperature</legend>
+                  <label className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-neutral-0 hover:bg-neutral-700">
+                    <input
+                      type="radio"
+                      name="temperature"
+                      value="celsius"
+                      checked={temperature === 'celsius'}
+                      onChange={() => setTemperature('celsius')}
+                    />
+                    Celsius (°C)
+                  </label>
+                  <label className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-neutral-0 hover:bg-neutral-700">
+                    <input
+                      type="radio"
+                      name="temperature"
+                      value="fahrenheit"
+                      checked={temperature === 'fahrenheit'}
+                      onChange={() => setTemperature('fahrenheit')}
+                    />
+                    Fahrenheit (°F)
+                  </label>
+                </fieldset>
 
-              <fieldset>
-                <legend>Wind Speed</legend>
-                <label>
-                  <input type="radio" name="wind" value="kmh" defaultChecked />
-                  km/h
-                </label>
-                <label>
-                  <input type="radio" name="wind" value="mph" />
-                  mph
-                </label>
-              </fieldset>
+                <fieldset className="mb-2">
+                  <legend className="px-3 py-1 text-xs text-neutral-300">Wind Speed</legend>
+                  <label className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-neutral-0 hover:bg-neutral-700">
+                    <input
+                      type="radio"
+                      name="wind"
+                      value="kmh"
+                      checked={wind === 'kmh'}
+                      onChange={() => setWind('kmh')}
+                    />
+                    km/h
+                  </label>
+                  <label className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-neutral-0 hover:bg-neutral-700">
+                    <input
+                      type="radio"
+                      name="wind"
+                      value="mph"
+                      checked={wind === 'mph'}
+                      onChange={() => setWind('mph')}
+                    />
+                    mph
+                  </label>
+                </fieldset>
 
-              <fieldset>
-                <legend>Precipitation</legend>
-                <label>
-                  <input type="radio" name="precipitation" value="mm" defaultChecked />
-                  Millimeters (mm)
-                </label>
-                <label>
-                  <input type="radio" name="precipitation" value="in" />
-                  Inches (in)
-                </label>
-              </fieldset>
-            </div>
+                <fieldset>
+                  <legend className="px-3 py-1 text-xs text-neutral-300">Precipitation</legend>
+                  <label className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-neutral-0 hover:bg-neutral-700">
+                    <input
+                      type="radio"
+                      name="precipitation"
+                      value="mm"
+                      checked={precipitation === 'mm'}
+                      onChange={() => setPrecipitation('mm')}
+                    />
+                    Millimeters (mm)
+                  </label>
+                  <label className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-neutral-0 hover:bg-neutral-700">
+                    <input
+                      type="radio"
+                      name="precipitation"
+                      value="in"
+                      checked={precipitation === 'in'}
+                      onChange={() => setPrecipitation('in')}
+                    />
+                    Inches (in)
+                  </label>
+                </fieldset>
+              </div>
+            )}
           </div>
         </header>
 
