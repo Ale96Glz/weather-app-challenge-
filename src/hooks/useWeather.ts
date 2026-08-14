@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { detectUserLocation } from '../services/geolocation'
 import { getForecast, searchCities } from '../services/weatherApi'
 import type { Forecast, GeoLocation, WeatherUnits } from '../types/weather'
 
@@ -28,7 +29,7 @@ type UseWeatherResult = {
 }
 
 export function useWeather(units: WeatherUnits): UseWeatherResult {
-  const [location, setLocation] = useState<GeoLocation | null>(DEFAULT_LOCATION)
+  const [location, setLocation] = useState<GeoLocation | null>(null)
   const [forecast, setForecast] = useState<Forecast | null>(null)
   const [selectedDay, setSelectedDay] = useState('')
   const [isLoading, setIsLoading] = useState(true)
@@ -36,6 +37,8 @@ export function useWeather(units: WeatherUnits): UseWeatherResult {
   const [error, setError] = useState<string | null>(null)
   const [searchResults, setSearchResults] = useState<GeoLocation[]>([])
   const [reloadToken, setReloadToken] = useState(0)
+  const [hasResolvedInitialLocation, setHasResolvedInitialLocation] =
+    useState(false)
 
   const loadForecast = useCallback(
     async (target: GeoLocation) => {
@@ -61,10 +64,29 @@ export function useWeather(units: WeatherUnits): UseWeatherResult {
     [units],
   )
 
+  // Detect user location once on mount (fallback: Berlin)
   useEffect(() => {
-    if (!location) return
+    let cancelled = false
+
+    async function initLocation() {
+      setIsLoading(true)
+      const detected = await detectUserLocation(DEFAULT_LOCATION)
+      if (cancelled) return
+      setLocation(detected)
+      setHasResolvedInitialLocation(true)
+    }
+
+    void initLocation()
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!hasResolvedInitialLocation || !location) return
     void loadForecast(location)
-  }, [location, loadForecast, reloadToken])
+  }, [location, loadForecast, reloadToken, hasResolvedInitialLocation])
 
   async function search(query: string) {
     const trimmed = query.trim()
@@ -109,6 +131,15 @@ export function useWeather(units: WeatherUnits): UseWeatherResult {
   }
 
   function retry() {
+    if (!location) {
+      setHasResolvedInitialLocation(false)
+      setIsLoading(true)
+      void detectUserLocation(DEFAULT_LOCATION).then((detected) => {
+        setLocation(detected)
+        setHasResolvedInitialLocation(true)
+      })
+      return
+    }
     setReloadToken((token) => token + 1)
   }
 
